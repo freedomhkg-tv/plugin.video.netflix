@@ -162,8 +162,9 @@ def run(argv):
         try:
             if _check_valid_credentials():
                 if g.IS_ADDON_FIRSTRUN:
-                    check_addon_upgrade()
-                g.initial_addon_configuration()
+                    if check_addon_upgrade():
+                        from resources.lib.config_wizard import run_addon_configuration
+                        run_addon_configuration()
                 route([part for part in g.PATH.split('/') if part])
             else:
                 success = False
